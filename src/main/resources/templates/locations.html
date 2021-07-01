@@ -34,19 +34,24 @@
                 type_id
             </th>
 
-               <th> Operations</th>
-                <th></th>
+               <th colspan="2" class="text-center"> Operations</th>
+<!--                <th></th>-->
         </tr>
         <th:block th:each="location : ${allLocations}">
             <tr>
+                <td th:text="${location.id}"></td>
                 <td th:text="${location.longitude}">A Smoke Test'</td>
                 <td th:text="${location.latitude}">A Smoke Test'</td>
                 <td th:text="${location.typeid}"></td>
-
+                <span>
+                    <td class="text-center"> <a th:href="@{/UpdateLocation/{id}(id=${location.id})}" class="btn btn-primary">Update</a> </td>
+                    <td class="text-center"> <a th:href="@{/DeleteLocation/{id}(id=${location.id})}" class="btn btn-secondary">Delete</a> </td>
+                </span>
             </tr>
         </th:block>
     </table>
-
+    <a th:href="@{/addNewLocation}" class="btn btn-primary">Add new value th</a>
+<a href="/addNewLocation" class="btn btn-primary"> Add new value</a>
 </div>
 </body>
 </html>
