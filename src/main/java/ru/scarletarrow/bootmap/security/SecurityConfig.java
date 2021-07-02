@@ -48,19 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.
-            csrf().
-                disable().
-                sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().
-                addFilter(new JwtUserNameAndPasswordAuthFilter(authenticationManager(), jwtConfig, secretKey))
-                .addFilterAfter(new JwtVerifier(secretKey, jwtConfig), JwtUserNameAndPasswordAuthFilter.class)
-                .authorizeRequests()
-                .  antMatchers("/", "index", "locations").
-                permitAll().
-                antMatchers("/api/**").hasRole(ADMIN.name()).
-                antMatchers("/management/api/**").hasRole(ADMIN.name()).
-                anyRequest().
-                authenticated();
-    /*
+
                 csrf()
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .and().
@@ -84,14 +72,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .clearAuthentication(true)
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID", "remember-me", "Idea-15b49c4a")
-                .logoutSuccessUrl("/login");*/
+                .logoutSuccessUrl("/login");
 
 
 
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth)  {
         auth.authenticationProvider(daoAuthenticationProvider());
 
     }
