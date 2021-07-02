@@ -11,12 +11,12 @@
 <div class="container">
     <h1>Add new location</h1>
     <hr>
-    <form action="#" th:action="@{/saveLocation}" th:object="${location}" method="post">
-        <input type="text" th:field="*{longitude}" placeholder="Location longitude" >
+    <form action="#" th:action="@{~/locations/saveLocation}" th:object="${location}" method="post">
+        <input type="text" th:field="*{longitude}" placeholder="Location longitude" class="form-control mb-4 col-4">
         <br>
-        <input type="text" th:field="*{latitude}" placeholder="Location longitude">
+        <input type="text" th:field="*{latitude}" placeholder="Location longitude" class="form-control mb-4 col-4">
         <br>
-        <input type="text" th:field="*{typeid}" placeholder="Location longitude">
+        <input type="text" th:field="*{typeid}" placeholder="Location longitude" class="form-control mb-4 col-4">
         <button type="submit" class="btn btn-info">Save location</button>
     </form>
 </div>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>HOLA</title>
@@ -18,16 +18,10 @@
 <h1>Hello, user!</h1>
 <form class="form-signin-1" method="get" action="/logout">
     <h2 class="form-signin-heading">Please sign in1</h2>
-    <p>
-        <label for="username" class="sr-only">Username</label>
-        <input type="text" id="username" name="username" class="form-control" placeholder="Username" required="" autofocus="">
-    </p>
-    <p>
-        <label for="password" class="sr-only">Password</label>
-        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="">
-    </p>
+
 
     <button class="btn btn-lg btn-primary btn-block" type="submit">Logout</button>
+    <a th:href="@{/locations}">AA</a>
 </form>
 </body>
 </html>

@@ -10,13 +10,13 @@
 <div class="container">
     <h1>Update location</h1>
     <hr>
-    <form action="#" th:action="@{/saveLocation}" th:object="${location}" method="post">
+    <form action="#" th:action="@{~/locations/saveLocation}" th:object="${location}" method="post">
         <input type="hidden" th:field="*{id}" />
-        <input type="text" th:field="*{longitude}"  >
+        <input type="text" th:field="*{longitude}"  class="form-control mb-4 col-4">
         <br>
-        <input type="text" th:field="*{latitude}" >
+        <input type="text" th:field="*{latitude}" class="form-control mb-4 col-4">
         <br>
-        <input type="text" th:field="*{typeid}" >
+        <input type="text" th:field="*{typeid}" class="form-control mb-4 col-4">
         <button type="submit" class="btn btn-info">Update location info</button>
     </form>
 </div>
