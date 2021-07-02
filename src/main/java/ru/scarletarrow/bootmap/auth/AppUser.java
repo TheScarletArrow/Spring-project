@@ -18,7 +18,6 @@ public class AppUser implements UserDetails {
     private final boolean isEnabled;
 
     public AppUser(String username,
-
                    String password,
                    Set<? extends GrantedAuthority> grantedAuthorities,
                    boolean isAccountNonExpired,

@@ -24,11 +24,11 @@ public class APIController {
         return locationRepository.findAll();
     }
 
-//    @PostMapping("/locations")
-//    private Location saveLocation(@RequestBody Location location){
-//        locationRepository.save(location);
-//        return location;
-//    }
+    @PostMapping("/locations")
+    private Location saveLocation(@RequestBody Location location){
+        locationRepository.save(location);
+        return location;
+    }
 
     @GetMapping("/operators")
     private List<Operator> showAllOperators() {

@@ -9,10 +9,16 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import ru.scarletarrow.bootmap.auth.AppUserService;
+import ru.scarletarrow.bootmap.jwt.JwtConfig;
+import ru.scarletarrow.bootmap.jwt.JwtUserNameAndPasswordAuthFilter;
+import ru.scarletarrow.bootmap.jwt.JwtVerifier;
+
+import javax.crypto.SecretKey;
 
 import java.util.concurrent.TimeUnit;
 
@@ -26,34 +32,47 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
     private final AppUserService appUserService;
+    private final SecretKey secretKey;
+    private final JwtConfig jwtConfig;
+
 
     @Autowired
-    public SecurityConfig(PasswordEncoder passwordEncoder, AppUserService appUserService) {
+    public SecurityConfig(PasswordEncoder passwordEncoder, AppUserService appUserService, SecretKey secretKey, JwtConfig jwtConfig) {
         this.passwordEncoder = passwordEncoder;
         this.appUserService = appUserService;
+        this.secretKey = secretKey;
+        this.jwtConfig = jwtConfig;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//       http.csrf().disable().
-//               authorizeRequests()
-//               .antMatchers("/api/**")
-//               .hasRole("ADMIN");
+
         http.
-                csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).
-                and().
+            csrf().
+                disable().
+                sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().
+                addFilter(new JwtUserNameAndPasswordAuthFilter(authenticationManager(), jwtConfig, secretKey))
+                .addFilterAfter(new JwtVerifier(secretKey, jwtConfig), JwtUserNameAndPasswordAuthFilter.class)
+                .authorizeRequests()
+                .  antMatchers("/", "index", "locations").
+                permitAll().
+                antMatchers("/api/**").hasRole(ADMIN.name()).
+                antMatchers("/management/api/**").hasRole(ADMIN.name()).
+                anyRequest().
+                authenticated();
+    /*
+                csrf()
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .and().
                 authorizeRequests().
-                antMatchers("/", "index").
+                antMatchers("/", "index", "locations").
                 permitAll().
                 antMatchers("/api/**").hasRole(ADMIN.name()).
                 anyRequest().
-                authenticated().and()
+                authenticated()
+                .and()
                 .formLogin()
-//                .loginPage("/login")
-//                .permitAll()
-//                .passwordParameter("password")
-//                .usernameParameter("username")
-                .defaultSuccessUrl("/locations", true)
+                .defaultSuccessUrl("/hola", true)
                 .and()
                 .rememberMe()
                 .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(14))
@@ -65,12 +84,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .clearAuthentication(true)
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID", "remember-me", "Idea-15b49c4a")
-                .logoutSuccessUrl("/login");
-//                    .loginPage("/login")
-//                    .permitAll()
-//                    .defaultSuccessUrl("/hola", true)
-//                    .passwordParameter("password")
-//                    .usernameParameter("username");
+                .logoutSuccessUrl("/login");*/
+
 
 
     }
@@ -78,6 +93,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(daoAuthenticationProvider());
+
     }
 
     @Bean

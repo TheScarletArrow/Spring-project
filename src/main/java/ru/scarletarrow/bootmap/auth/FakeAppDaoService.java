@@ -27,7 +27,8 @@ public class FakeAppDaoService implements UserDAO {
     }
 
     private List<AppUser> getAppUsers() {
-        List<AppUser> appUsers = Lists.newArrayList(
+
+        return Lists.newArrayList(
                 new AppUser(
                         "admin",
                         passwordEncoder.encode("admin"),
@@ -50,7 +51,5 @@ public class FakeAppDaoService implements UserDAO {
                         true, true, true
                 )
         );
-
-        return appUsers;
     }
 }
