@@ -11,4 +11,7 @@ public interface LocationService {
     Location getLocationById(int id);
     void deleteLocationById(int id);
     Page<Location> findPaginated(int pageNumber,int pageSize);
+    public List<Location> getByTypeId(int id);
+
+
 }

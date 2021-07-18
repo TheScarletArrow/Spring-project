@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-
 public class MainController {
 
     @Autowired
@@ -54,6 +53,7 @@ public class MainController {
         locationService.deleteLocationById(id);
         return "redirect:/locations";
     }
+
 
     @GetMapping("locations/page/{pageNumber}")
     public String findPaginated(@PathVariable(value = "pageNumber") int PageNumber, Model model){

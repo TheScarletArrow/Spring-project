@@ -15,6 +15,8 @@
 
 </head>
 <body>
+<div th:insert="navigation::copy"></div>
+
 <div sec:authorize="hasRole('ROLE_ADMIN')">
     <li><a href="/logout">User Management</a></li>
 </div>
@@ -35,7 +37,7 @@
                 type_id
             </th>
 
-            <th colspan="2" class="text-center"> Operations</th>
+            <th colspan="2"  class="text-center"> Operations</th>
             <!--                <th></th>-->
         </tr>
         <th:block th:each="location : ${allLocations}">

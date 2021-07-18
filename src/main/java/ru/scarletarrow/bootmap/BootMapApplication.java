@@ -10,7 +10,6 @@ public class BootMapApplication {
 
     public static void main(String[] args) {
 
-
         SpringApplication.run(BootMapApplication.class, args);
 
 

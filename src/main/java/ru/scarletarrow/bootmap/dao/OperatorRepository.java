@@ -8,5 +8,5 @@ import ru.scarletarrow.bootmap.entity.Operator;
 import java.util.List;
 
 public interface OperatorRepository extends JpaRepository<Operator, Integer> {
-    public List<Operator> getOperatorById(int id);
+
 }

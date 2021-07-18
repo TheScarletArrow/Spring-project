@@ -14,6 +14,7 @@ import java.util.stream.IntStream;
 
 @Service
 public class LocationServiceImpl implements LocationService{
+
     @Autowired
     LocationRepository locationRepository;
 
@@ -46,5 +47,11 @@ public class LocationServiceImpl implements LocationService{
         Pageable pageable = PageRequest.of(pageNumber-1, pageSize);
 
         return locationRepository.findAll(pageable);
+    }
+
+
+    @Override
+    public List<Location> getByTypeId(int type_id) {
+        return locationRepository.findByTypeidEqualsAndTypeidNotNull(type_id);
     }
 }

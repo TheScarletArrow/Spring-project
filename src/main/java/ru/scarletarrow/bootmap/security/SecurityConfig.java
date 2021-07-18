@@ -48,38 +48,51 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.
-
-                csrf()
-                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                .and().
-                authorizeRequests().
-                antMatchers("/", "index", "locations").
+            csrf().
+                disable().
+                sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().
+                addFilter(new JwtUserNameAndPasswordAuthFilter(authenticationManager(), jwtConfig, secretKey))
+                .addFilterAfter(new JwtVerifier(secretKey, jwtConfig), JwtUserNameAndPasswordAuthFilter.class)
+                .authorizeRequests()
+                .  antMatchers("/", "index", "locations").
                 permitAll().
+                antMatchers("/locations/**").permitAll().
                 antMatchers("/api/**").hasRole(ADMIN.name()).
+//                antMatchers("/management/api/**").hasRole(ADMIN.name()).
                 anyRequest().
-                authenticated()
-                .and()
-                .formLogin()
-                .defaultSuccessUrl("/hola", true)
-                .and()
-                .rememberMe()
-                .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(14))
-                .key("something")
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET")) // https://docs.spring.io/spring-security/site/docs/4.2.12.RELEASE/apidocs/org/springframework/security/config/annotation/web/configurers/LogoutConfigurer.html        .clearAuthentication(true)
-                .clearAuthentication(true)
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID", "remember-me", "Idea-15b49c4a")
-                .logoutSuccessUrl("/login");
+                authenticated();
+
+//                csrf()
+//                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+//                .and().
+//                authorizeRequests().
+//                antMatchers("/", "index", "locations").
+//                permitAll().
+//                antMatchers("/api/**").hasRole(ADMIN.name()).
+//                anyRequest().
+//                authenticated()
+//                .and()
+//                .formLogin()
+//                .defaultSuccessUrl("/hola", true)
+//                .and()
+//                .rememberMe()
+//                .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(14))
+//                .key("something")
+//                .and()
+//                .logout()
+//                .logoutUrl("/logout")
+//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET")) // https://docs.spring.io/spring-security/site/docs/4.2.12.RELEASE/apidocs/org/springframework/security/config/annotation/web/configurers/LogoutConfigurer.html        .clearAuthentication(true)
+//                .clearAuthentication(true)
+//                .invalidateHttpSession(true)
+//                .deleteCookies("JSESSIONID", "remember-me", "Idea-15b49c4a")
+//                .logoutSuccessUrl("/login");
 
 
 
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth)  {
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(daoAuthenticationProvider());
 
     }

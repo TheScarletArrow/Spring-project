@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+
 public class AppUser implements UserDetails {
 
     private final Set<? extends GrantedAuthority> grantedAuthorities;

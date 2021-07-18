@@ -10,7 +10,7 @@ import ru.scarletarrow.bootmap.entity.Operator;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1/api/")
 public class APIController {
 
     @Autowired
@@ -25,19 +25,21 @@ public class APIController {
     }
 
     @PostMapping("/locations")
+    @ResponseBody
     private Location saveLocation(@RequestBody Location location){
         locationRepository.save(location);
         return location;
     }
+
 
     @GetMapping("/operators")
     private List<Operator> showAllOperators() {
         return operatorRepository.findAll();
     }
 
-    @GetMapping("/locations/type-id/{id}")
-    private List<Location> showLocationsWithLocTypeId(@PathVariable int id) {
-        return locationRepository.findByTypeidEqualsAndTypeidNotNull(id);
-    }
+//    @GetMapping("/locations/type-id/{id}")
+//    private List<Location> showLocationsWithLocTypeId(@PathVariable int id) {
+//        return locationRepository.findByTypeidEqualsAndTypeidNotNull(id);
+//    }
 
 }
