@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.scarletarrow.bootmap.dao.OperatorRepository;
+import ru.scarletarrow.bootmap.entity.MESSAGE_TYPE;
 import ru.scarletarrow.bootmap.entity.Message;
 import ru.scarletarrow.bootmap.entity.Operator;
-import ru.scarletarrow.bootmap.service.OperatorService;
 
 import java.util.List;
 
@@ -28,6 +28,6 @@ public class ManagementControllerOperators {
     public Object getOperatorById(@PathVariable int id){
         var findById = operatorRepository.findById(id);
         if (findById.isPresent()) return findById.get();
-        else return new Message("No operator with id "+ id);
+        else return new Message(MESSAGE_TYPE.ERROR,"No operator with id "+ id);
     }
 }

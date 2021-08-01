@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .  antMatchers("/", "index", "locations").
                 permitAll().
-                antMatchers("/locations/**").permitAll().
+                antMatchers("/locations/**", "/mail/**").permitAll().
                 antMatchers("/api/**").hasRole(ADMIN.name()).
 //                antMatchers("/management/api/**").hasRole(ADMIN.name()).
                 anyRequest().

@@ -27,4 +27,7 @@ public class Location {
     @Column(name = "typeid")
     private int typeid;
 
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "user_id")
+//    private User user;
 }
