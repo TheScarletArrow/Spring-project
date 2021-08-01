@@ -25,8 +25,6 @@ public class ManagementControllerLocations {
     private LocationRepository locationRepository;
 
 
-
-
     Logger LOGGER = LoggerFactory.getLogger(APIController.class);
 
 

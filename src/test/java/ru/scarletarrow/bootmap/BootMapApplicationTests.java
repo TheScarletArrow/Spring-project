@@ -13,9 +13,8 @@ import ru.scarletarrow.bootmap.entity.User;
 import ru.scarletarrow.bootmap.service.EmailSenderService;
 import ru.scarletarrow.bootmap.service.UserService;
 
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
+
 
 @SpringBootTest
 class BootMapApplicationTests {
@@ -82,15 +81,22 @@ class BootMapApplicationTests {
        User user = new User();
 
        user.setPassword("123");
-       user.setName("dfg");
+       user.setName("Anton  ");
        user.setMail("vika@vika.ri");
        user.setBirthdate("2000-00-00");
 
-       if (!userService.userValids(user)) {
-           LOGGER.error(user.getName() + " is not a valid name");
-       } else {
+       if (userService.usernameValid.test(user)) {
+           LOGGER.info(user.getName() + " is valid name");
            userService.setUser(user);
+       } else {
+           LOGGER.error(user.getName() + " is not a valid name");
        }
+//       if (!userService.userValidsUsername(user)) {
+//           LOGGER.error(user.getName() + " is not a valid name");
+//       } else {
+//           userService.setUser(user);
+//       }
+
        LOGGER.info(user.toString());
 
    }

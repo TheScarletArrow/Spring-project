@@ -16,37 +16,16 @@ import java.util.List;
 @RequestMapping("/api/v1/")
 public class APIController {
 
-    @Autowired
-    private LocationRepository locationRepository;
-
-    @Autowired
-    private OperatorRepository operatorRepository;
 
     @Autowired
     private EmailSenderService emailSenderService;
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @GetMapping("/locations")
-    private List<Location> showAllLocations() {
-        return locationRepository.findAll();
-    }
-
-    @PostMapping("/locations")
-    @ResponseBody
-    private Location saveLocation(@RequestBody Location location) {
-        locationRepository.save(location);
-        return location;
-    }
 
 
-    @GetMapping("/operators")
-    private List<Operator> showAllOperators() {
-        return operatorRepository.findAll();
-    }
+
+
 
 //    @PostMapping("/mail")
 //    private Object sendMail(@RequestBody Mail mail) {
@@ -58,16 +37,16 @@ public class APIController {
 //        }
 //    }
 @PostMapping("/mail")
-private ResponseEntity<?> sendMail(@RequestBody Mail mail) {
+private Object sendMail(@RequestBody Mail mail) {
     if (mail.getTo()==(null) || mail.getBody()==(null) || mail.getSubject()==(null))
-        return ResponseEntity.badRequest().body( "One of the fields is missing");
+        return new Message(MESSAGE_TYPE.ERROR, "error with fields");
     else {
         if (mail.getAttachment()==null)
             emailSenderService.sendSimpleMail(mail.getTo(), mail.getBody(), mail.getSubject());
         else
             emailSenderService.sendMailWithAttachment(mail.getTo(), mail.getBody(), mail.getSubject(), mail.getAttachment());
 
-        return ResponseEntity.ok("message sent");
+        return new Message(MESSAGE_TYPE.OK, "message sent");
     }
 }
 

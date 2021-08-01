@@ -29,12 +29,10 @@ import static ru.scarletarrow.bootmap.security.ApplicationUserRole.*;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-
     private final PasswordEncoder passwordEncoder;
     private final AppUserService appUserService;
     private final SecretKey secretKey;
     private final JwtConfig jwtConfig;
-
 
     @Autowired
     public SecurityConfig(PasswordEncoder passwordEncoder, AppUserService appUserService, SecretKey secretKey, JwtConfig jwtConfig) {
@@ -46,7 +44,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http.
             csrf().
                 disable().
@@ -87,14 +84,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .deleteCookies("JSESSIONID", "remember-me", "Idea-15b49c4a")
 //                .logoutSuccessUrl("/login");
 
-
-
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(daoAuthenticationProvider());
-
     }
 
     @Bean
