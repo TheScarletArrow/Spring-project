@@ -8,7 +8,11 @@ import ru.scarletarrow.bootmap.entity.Message;
 import ru.scarletarrow.bootmap.entity.Operator;
 
 import java.util.List;
-
+/**
+ @author Anton Yurkov
+ @apiNote this is REST API
+ @version 0.7
+ */
 @RestController
 @RequestMapping("/api/operators")
 public class ManagementControllerOperators {

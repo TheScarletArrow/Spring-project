@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <form th:object="${mail}" th:action="@{~/mail/send}">
+        <div class="form-group">
+            <label for="emailTo">To:</label>
+            <input required type="text" class="form-control" id="emailTo" placeholder="Email to..." th:field="*{to}">
+        </div>
+        <div class="form-group">
+            <label for="emailSubject">Subject</label>
+            <input required type="text" class="form-control" id="emailSubject" placeholder="Another input placeholder" th:field="*{subject}">
+    </div>
+    <div class=" form-group">
+            <label for="exampleFormControlTextarea1">Body</label>
+            <textarea required class="form-control" id="exampleFormControlTextarea1" rows="3" th:field="*{body}"></textarea>
+
+<!--        <input required type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input placeholder"-->
+<!--                   th:field="*{body}">-->
+    </div>
+    <button class=" btn btn-primary" type="submit">Submit form</button>
+    </form>
+</div>
+</body>
+</html>

@@ -27,7 +27,14 @@ public class Location {
     @Column(name = "typeid")
     private int typeid;
 
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "user_id")
-//    private User user;
+    @Column(name = "user_id")
+    private String user_id;
+
+    @Column(name = "test_id")
+    private String test_id;
+
+
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "test_id", referencedColumnName = "test_id")
+//    private Test test;
 }

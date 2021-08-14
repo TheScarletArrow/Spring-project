@@ -11,7 +11,8 @@ import ru.scarletarrow.bootmap.dao.LocationRepository;
 import ru.scarletarrow.bootmap.entity.Mail;
 import ru.scarletarrow.bootmap.entity.User;
 import ru.scarletarrow.bootmap.service.EmailSenderService;
-import ru.scarletarrow.bootmap.service.UserService;
+import ru.scarletarrow.bootmap.service.UserServiceImpl;
+import static org.assertj.core.api.BDDAssertions.then;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ class BootMapApplicationTests {
     LocationRepository locationRepository;
 
     @Autowired
-    UserService userService;
+    UserServiceImpl userServiceImpl;
     @Autowired
     EmailSenderService emailSenderService;
 
@@ -43,13 +44,11 @@ class BootMapApplicationTests {
     void checkIfNotNull() {
         Assert.noNullElements(locationRepository.findAll(), "message");
     }
-    @Test
-    void checkFalse(){
-        Assert.isNull(locationRepository,"message");
-    }
+
 
     @Test
     void testSimpleMailSend(){
+
         Mail mail = new Mail();
         mail.setBody("Hello world");
         mail.setSubject("test");
@@ -79,15 +78,15 @@ class BootMapApplicationTests {
     void test(){
            //Assertions.assertThat(locationRepository.findAll()).map(location -> location.getTypeid()!=0).first().isNotNull();
        User user = new User();
-
+//       given()
        user.setPassword("123");
-       user.setName("Anton  ");
+       user.setName("Anton  123");
        user.setMail("vika@vika.ri");
        user.setBirthdate("2000-00-00");
 
-       if (userService.usernameValid.test(user)) {
+       if (userServiceImpl.usernameValid.test(user)) {
            LOGGER.info(user.getName() + " is valid name");
-           userService.setUser(user);
+           userServiceImpl.setUser(user);
        } else {
            LOGGER.error(user.getName() + " is not a valid name");
        }
